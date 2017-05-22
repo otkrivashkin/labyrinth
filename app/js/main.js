@@ -59,12 +59,17 @@ function addButtons(array) {
     document.body.appendChild(buttonContainer);
 }
 addButtons(buttons);
+
+var start = document.querySelector(".start");
+start.style.position = "relative";
+
 var upBtn = document.querySelector('.up');
 var downBtn = document.querySelector('.bottom');
 var leftBtn = document.querySelector('.left');
 var rightBtn = document.querySelector('.right');
 upBtn.addEventListener("click", function () {
    console.log("You click up!");
+   start.style.top = "20px";
 });
 downBtn.addEventListener("click", function () {
     console.log("You click down!");
@@ -76,7 +81,7 @@ rightBtn.addEventListener("click", function () {
     console.log("You click right!");
 });
 //
-var start = document.querySelector(".start");
+
 
 
 
