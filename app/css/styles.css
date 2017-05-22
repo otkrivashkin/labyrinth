@@ -14,3 +14,12 @@ span {
   height: 19px;
   border-right: 1px solid #999;
   border-bottom: 1px solid #999; }
+
+span.wall {
+  background: #999; }
+
+span.gold {
+  background: #fa0; }
+
+span.start {
+  background: #080; }
