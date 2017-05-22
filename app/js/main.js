@@ -41,4 +41,43 @@ setClassName('gold');
 setClassName('start');
 // add labyrinth in body
 document.body.appendChild(labyrinth);
+// BUTTONS!!!
+var buttons = ["up", "bottom", "left", "right"];
+
+function addButtons(array) {
+    var buttonContainer = document.createElement("div");
+    for (var i = 0; i < array.length; i++) {
+        var button = document.createElement("button");
+        button.innerText = array[i];
+        button.className = array[i];
+        button.type = "button";
+        button.style.display = "inline-block";
+        buttonContainer.style.display = "inline-block";
+        // buttonContainer.className = "buttonContainer";
+        buttonContainer.appendChild(button);
+    }
+    document.body.appendChild(buttonContainer);
+}
+addButtons(buttons);
+var upBtn = document.querySelector('.up');
+var downBtn = document.querySelector('.bottom');
+var leftBtn = document.querySelector('.left');
+var rightBtn = document.querySelector('.right');
+upBtn.addEventListener("click", function () {
+   console.log("You click up!");
+});
+downBtn.addEventListener("click", function () {
+    console.log("You click down!");
+});
+leftBtn.addEventListener("click", function () {
+    console.log("You click left!");
+});
+rightBtn.addEventListener("click", function () {
+    console.log("You click right!");
+});
+//
+var start = document.querySelector(".start");
+
+
+
 
