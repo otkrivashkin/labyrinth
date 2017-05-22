@@ -7,7 +7,7 @@ var lab = [
 ];
 
 var labyrinth = document.createElement('div');
-
+// create board
 for (var column = 0; column < lab.length; column++) {
     var p = document.createElement('p');
     for (var row = 0; row < lab[column].length; row++) {
@@ -20,11 +20,11 @@ for (var column = 0; column < lab.length; column++) {
     }
     labyrinth.appendChild(p);
 }
-
+// create random number from lab array
 function getRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
-
+// add className in document
 function setClassName(className) {
     while (true) {
         var randomP = getRandom(1, lab.length - 1);
@@ -36,9 +36,9 @@ function setClassName(className) {
         }
     }
 }
-
+// add class names in div labyrinth
 setClassName('gold');
 setClassName('start');
-
+// add labyrinth in body
 document.body.appendChild(labyrinth);
 
