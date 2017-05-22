@@ -25,20 +25,23 @@ function getRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
 // add className in document
-function setClassName(className) {
+function addClass(className) {
     while (true) {
         var randomP = getRandom(1, lab.length - 1);
         var randomSpan = getRandom(1, lab[randomP].length - 1);
         var innerText = labyrinth.querySelector("p:nth-child(" + randomP + ") span:nth-child(" + randomSpan + ")").innerText;
         if (innerText < 1) {
             labyrinth.querySelector("p:nth-child(" + randomP + ") span:nth-child(" + randomSpan + ")").className = className;
-            break;
+            return {
+                "row" : randomP,
+                "column" : randomSpan
+            };
         }
     }
 }
 // add class names in div labyrinth
-setClassName('gold');
-setClassName('start');
+addClass('gold');
+var start = addClass('start');
 // add labyrinth in body
 document.body.appendChild(labyrinth);
 // BUTTONS!!!
@@ -53,33 +56,79 @@ function addButtons(array) {
         button.type = "button";
         button.style.display = "inline-block";
         buttonContainer.style.display = "inline-block";
-        // buttonContainer.className = "buttonContainer";
+        buttonContainer.className = "buttonContainer";
         buttonContainer.appendChild(button);
     }
     document.body.appendChild(buttonContainer);
 }
 addButtons(buttons);
 
-var start = document.querySelector(".start");
-start.style.position = "relative";
-
 var upBtn = document.querySelector('.up');
 var downBtn = document.querySelector('.bottom');
 var leftBtn = document.querySelector('.left');
 var rightBtn = document.querySelector('.right');
+/*
+* [1,1,1,1,1,1,1,1],
+* [1,0,0,0,0,0,0,1],
+* [1,0,0,s,0,0,0,1], -> pos[2][3] : up    -> pos[1][3]
+* [1,0,0,0,0,0,0,1], -> pos[2][3] : down  -> pos[3][3]
+* [1,0,0,0,0,0,0,1], -> pos[2][3] : left  -> pos[2][2]
+* [1,0,0,0,0,0,0,1], -> pos[2][3] : right -> pos[2][4]
+* [1,1,1,1,1,1,1,1]
+* */
+
+// console.log(labyrinth.querySelector("p").childElementCount);
+function findElement(array, stepRow, stepCol) {
+    for (var row = 1; row <= array.childElementCount; row++) {
+        for (var column = 1; column <= array.querySelector("p").childElementCount; column++) {
+            var rowSum = start["row"] + stepRow;
+            var columnSum = start["column"] + stepCol;
+            array.querySelector("p:nth-child("
+                + rowSum +
+                ") span:nth-child("
+                + columnSum +
+                ")").className = "start";
+            array.querySelector("p:nth-child("
+                + start["row"] +
+                ") span:nth-child("
+                + start["column"] +
+                ")").className = "none";
+        }
+    }
+}
+
+
 upBtn.addEventListener("click", function () {
-   console.log("You click up!");
-   start.style.top = "20px";
+
+    var row = --start["row"];
+    var tail = row+1;
+    var column = start["column"];
+    labyrinth.querySelector("p:nth-child("
+        + tail +
+        ") span:nth-child("
+        + column +
+        ")").style.backgroundColor = "white";
+
+    labyrinth.querySelector("p:nth-child("
+        + row +
+        ") span:nth-child("
+        + column +
+        ")").style.backgroundColor = "red";
+
 });
 downBtn.addEventListener("click", function () {
     console.log("You click down!");
+    findElement(labyrinth, 1, 0);
 });
 leftBtn.addEventListener("click", function () {
     console.log("You click left!");
+    findElement(labyrinth, 0, -1);
 });
 rightBtn.addEventListener("click", function () {
     console.log("You click right!");
+    findElement(labyrinth, 0, 1);
 });
+
 //
 
 

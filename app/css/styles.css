@@ -21,5 +21,8 @@ span.wall {
 span.gold {
   background: #fa0; }
 
+span.road {
+  background: none; }
+
 span.start {
-  background: #080; }
+  background: red; }
