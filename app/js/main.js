@@ -77,13 +77,17 @@ var rightBtn = document.querySelector('.right');
 * [1,1,1,1,1,1,1,1]
 * */
 
+function canMove(input) {
+
+
+}
+
 function move(direction) {
     var row = start["row"];
     var column = start["column"];
 
     if (direction === "up") {
         row = --start["row"];
-        column = start["column"];
         labyrinth.querySelector("p:nth-child("
             + (row+1) +
             ") span:nth-child("
@@ -98,7 +102,6 @@ function move(direction) {
     }
     else if(direction === "down") {
         row = ++start["row"];
-        column = start["column"];
         labyrinth.querySelector("p:nth-child("
             + (row-1) +
             ") span:nth-child("
@@ -112,7 +115,6 @@ function move(direction) {
             ")").style.backgroundColor = "red";
     }
     else if(direction === "left") {
-        row = start["row"];
         column = ++start["column"];
         labyrinth.querySelector("p:nth-child("
             + row +
@@ -127,7 +129,6 @@ function move(direction) {
             ")").style.backgroundColor = "red";
     }
     else if(direction === "right") {
-        row = start["row"];
         column = --start["column"];
         labyrinth.querySelector("p:nth-child("
             + row +
