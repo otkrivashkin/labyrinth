@@ -77,16 +77,50 @@ var rightBtn = document.querySelector('.right');
 * [1,1,1,1,1,1,1,1]
 * */
 
-function canMove(input) {
+//TODO how to check if element is a wall?
 
-
+function canMove(row, column) {
+    column = start[column];
+    row = --start[row];
+    var isWallUp = labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + column +
+            ")").className === "wall";
+    if (row === "wall") {
+        return true;
+    }
+    var isWallDown = labyrinth.querySelector("p:nth-child("
+            + ++row +
+            ") span:nth-child("
+            + column +
+            ")").className === "wall";
+    if (isWallDown) {
+        return true;
+    }
+    var isWallLeft = labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + --column +
+            ")").className === "wall";
+    if (isWallLeft) {
+        return true;
+    }
+    var isWallRight = labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + column +
+            ")").className === "wall";
+    if (isWallRight) {
+        return true;
+    }
 }
 
 function move(direction) {
     var row = start["row"];
     var column = start["column"];
-
-    if (direction === "up") {
+    if (direction === "up" && !canMove(row, column)) {
+        console.log("native row ", row);
         row = --start["row"];
         labyrinth.querySelector("p:nth-child("
             + (row+1) +
