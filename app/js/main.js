@@ -77,59 +77,89 @@ var rightBtn = document.querySelector('.right');
 * [1,1,1,1,1,1,1,1]
 * */
 
-// console.log(labyrinth.querySelector("p").childElementCount);
-function findElement(array, stepRow, stepCol) {
-    for (var row = 1; row <= array.childElementCount; row++) {
-        for (var column = 1; column <= array.querySelector("p").childElementCount; column++) {
-            var rowSum = start["row"] + stepRow;
-            var columnSum = start["column"] + stepCol;
-            array.querySelector("p:nth-child("
-                + rowSum +
-                ") span:nth-child("
-                + columnSum +
-                ")").className = "start";
-            array.querySelector("p:nth-child("
-                + start["row"] +
-                ") span:nth-child("
-                + start["column"] +
-                ")").className = "none";
-        }
+function move(direction) {
+    var row = start["row"];
+    var column = start["column"];
+
+    if (direction === "up") {
+        row = --start["row"];
+        column = start["column"];
+        labyrinth.querySelector("p:nth-child("
+            + (row+1) +
+            ") span:nth-child("
+            + column +
+            ")").style.backgroundColor = "white";
+
+        labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + column +
+            ")").style.backgroundColor = "red";
+    }
+    else if(direction === "down") {
+        row = ++start["row"];
+        column = start["column"];
+        labyrinth.querySelector("p:nth-child("
+            + (row-1) +
+            ") span:nth-child("
+            + column +
+            ")").style.backgroundColor = "white";
+
+        labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + column +
+            ")").style.backgroundColor = "red";
+    }
+    else if(direction === "left") {
+        row = start["row"];
+        column = ++start["column"];
+        labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + (column-1) +
+            ")").style.backgroundColor = "white";
+
+        labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + column +
+            ")").style.backgroundColor = "red";
+    }
+    else if(direction === "right") {
+        row = start["row"];
+        column = --start["column"];
+        labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + (column+1) +
+            ")").style.backgroundColor = "white";
+
+        labyrinth.querySelector("p:nth-child("
+            + row +
+            ") span:nth-child("
+            + column +
+            ")").style.backgroundColor = "red";
     }
 }
 
-
 upBtn.addEventListener("click", function () {
-
-    var row = --start["row"];
-    var tail = row+1;
-    var column = start["column"];
-    labyrinth.querySelector("p:nth-child("
-        + tail +
-        ") span:nth-child("
-        + column +
-        ")").style.backgroundColor = "white";
-
-    labyrinth.querySelector("p:nth-child("
-        + row +
-        ") span:nth-child("
-        + column +
-        ")").style.backgroundColor = "red";
-
+    console.log("You click up!");
+    move("up");
 });
 downBtn.addEventListener("click", function () {
     console.log("You click down!");
-    findElement(labyrinth, 1, 0);
-});
-leftBtn.addEventListener("click", function () {
-    console.log("You click left!");
-    findElement(labyrinth, 0, -1);
+    move("down");
 });
 rightBtn.addEventListener("click", function () {
     console.log("You click right!");
-    findElement(labyrinth, 0, 1);
+    move("left");
+});
+leftBtn.addEventListener("click", function () {
+    console.log("You click left!");
+    move("right");
 });
 
-//
 
 
 
