@@ -107,7 +107,7 @@ function isGold() {
         console.log("keep tracking...");
     }
 }
-
+// TODO replace start with elementName
 function move(direction, elementName) {
     var row = elementName["row"];
     var column = elementName["column"];
@@ -205,27 +205,30 @@ function move(direction, elementName) {
 }
 // Minos
 var minos = addClass('minos');
+// TODO убрать итерации в findPlayer и использовать только querySelector
+// for example if start[row] > minos[row] { minos[row]++ };
 function findPlayer() {
-    while (minos["row"] === start["row"] && minos["column"] === start["column"]) {
-        for (var row = 1; row < labyrinth.childElementCount; row++) {
-            for (var column = 0; column < labyrinth.querySelector("p:nth-child("+ row + ")").childElementCount; column++) {
-                if (start["row"] > minos["row"] && start["column"] !== minos["column"]) { // if player above minos
-                    move("up", minos);
+    for (var row = 1; row < labyrinth.childElementCount; row++) {
+            if (start["row"] > minos["row"] ) { // игрок снизу
+                if (start["column"] < minos["column"]) { // игрок слева
+                    return move("left", minos); //
                 }
-                else if (start["row"] < minos["row"] && start["column"] !== minos["column"]) { // if player below minos
-                    move("down", minos);
+                else if (start["column"] > minos["column"]) {
+                    return move("right", minos);
                 }
-                else if (start["column"] < minos["column"] && start["row"] !== minos["row"]) { // if player by left side from minos
-                    move("left", minos);
-                }
-                else if (start["column"] > minos["column"] && start["row"] !== minos["row"]) { // if player by right side from minos
-                    move("right", minos);
-                }
+                return move("down", minos);
+            }
+            else if (start["row"] < minos["row"]) { // if player below minos
+                move("down", minos);
+            }
+            else if (start["column"] < minos["column"] && start["row"] !== minos["row"]) { // if player by left side from minos
+                move("left", minos);
+            }
+            else if (start["column"] > minos["column"] && start["row"] !== minos["row"]) { // if player by right side from minos
+                move("right", minos);
             }
         }
-        console.log("Minos catch you!");
-    }
-    return true;
+
 }
 
 upBtn.addEventListener("click", function () {
