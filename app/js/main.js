@@ -77,104 +77,94 @@ var rightBtn = document.querySelector('.right');
 * [1,1,1,1,1,1,1,1]
 * */
 
-//TODO how to check if element is a wall?
-
-function canMove(row, column) {
-    column = start[column];
-    row = --start[row];
-    var isWallUp = labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + column +
-            ")").className === "wall";
-    if (row === "wall") {
-        return true;
-    }
-    var isWallDown = labyrinth.querySelector("p:nth-child("
-            + ++row +
-            ") span:nth-child("
-            + column +
-            ")").className === "wall";
-    if (isWallDown) {
-        return true;
-    }
-    var isWallLeft = labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + --column +
-            ")").className === "wall";
-    if (isWallLeft) {
-        return true;
-    }
-    var isWallRight = labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + column +
-            ")").className === "wall";
-    if (isWallRight) {
-        return true;
-    }
-}
-
 function move(direction) {
     var row = start["row"];
     var column = start["column"];
-    if (direction === "up" && !canMove(row, column)) {
-        console.log("native row ", row);
-        row = --start["row"];
-        labyrinth.querySelector("p:nth-child("
-            + (row+1) +
-            ") span:nth-child("
-            + column +
-            ")").style.backgroundColor = "white";
+    var tempRow = row;
+    var tempColumn = column;
+    if (direction === "up") {
+        var isWallUp = labyrinth.querySelector("p:nth-child("
+                + --tempRow +
+                ") span:nth-child("
+                + column +
+                ")").className === "wall";
+        if (!isWallUp) {
+            row = --start["row"];
+            labyrinth.querySelector("p:nth-child("
+                + (row+1) +
+                ") span:nth-child("
+                + column +
+                ")").style.backgroundColor = "white";
 
-        labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + column +
-            ")").style.backgroundColor = "red";
+            labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + column +
+                ")").style.backgroundColor = "red";
+        }
     }
     else if(direction === "down") {
-        row = ++start["row"];
-        labyrinth.querySelector("p:nth-child("
-            + (row-1) +
-            ") span:nth-child("
-            + column +
-            ")").style.backgroundColor = "white";
+        var isWallDown = labyrinth.querySelector("p:nth-child("
+                + ++tempRow +
+                ") span:nth-child("
+                + column +
+                ")").className === "wall";
+        if (!isWallDown) {
+            row = ++start["row"];
+            labyrinth.querySelector("p:nth-child("
+                + (row-1) +
+                ") span:nth-child("
+                + column +
+                ")").style.backgroundColor = "white";
 
-        labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + column +
-            ")").style.backgroundColor = "red";
+            labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + column +
+                ")").style.backgroundColor = "red";
+        }
     }
     else if(direction === "left") {
-        column = ++start["column"];
-        labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + (column-1) +
-            ")").style.backgroundColor = "white";
+        var isWallLeft = labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + --tempColumn +
+                ")").className === "wall";
+        if (!isWallLeft) {
+            column = --start["column"];
+            labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + (column+1) +
+                ")").style.backgroundColor = "white";
 
-        labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + column +
-            ")").style.backgroundColor = "red";
+            labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + column +
+                ")").style.backgroundColor = "red";
+        }
     }
     else if(direction === "right") {
-        column = --start["column"];
-        labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + (column+1) +
-            ")").style.backgroundColor = "white";
+        var isWallRight = labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + ++tempColumn +
+                ")").className === "wall";
+        if (!isWallRight) {
+            column = ++start["column"];
+            labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + (column-1) +
+                ")").style.backgroundColor = "white";
 
-        labyrinth.querySelector("p:nth-child("
-            + row +
-            ") span:nth-child("
-            + column +
-            ")").style.backgroundColor = "red";
+            labyrinth.querySelector("p:nth-child("
+                + row +
+                ") span:nth-child("
+                + column +
+                ")").style.backgroundColor = "red";
+        }
     }
 }
 
@@ -188,11 +178,11 @@ downBtn.addEventListener("click", function () {
 });
 rightBtn.addEventListener("click", function () {
     console.log("You click right!");
-    move("left");
+    move("right");
 });
 leftBtn.addEventListener("click", function () {
     console.log("You click left!");
-    move("right");
+    move("left");
 });
 
 
