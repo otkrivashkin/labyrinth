@@ -8,18 +8,22 @@ var lab = [
 
 var labyrinth = document.createElement('div');
 // create board
-for (var column = 0; column < lab.length; column++) {
-    var p = document.createElement('p');
-    for (var row = 0; row < lab[column].length; row++) {
-        var span = document.createElement('span');
-        span.innerHTML = lab[column][row];
-        if (lab[column][row] > 0) {
-            span.className = 'wall';
+function initBoard() {
+    for (var column = 0; column < lab.length; column++) {
+        var p = document.createElement('p');
+        for (var row = 0; row < lab[column].length; row++) {
+            var span = document.createElement('span');
+            span.innerHTML = lab[column][row];
+            if (lab[column][row] > 0) {
+                span.className = 'wall';
+            }
+            p.appendChild(span);
         }
-        p.appendChild(span);
+        labyrinth.appendChild(p);
     }
-    labyrinth.appendChild(p);
+
 }
+initBoard();
 // create random number from lab array
 function getRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -40,12 +44,12 @@ function addClass(className) {
     }
 }
 // add class names in div labyrinth
-addClass('gold');
+var gold = addClass('gold');
 var start = addClass('start');
 // add labyrinth in body
 document.body.appendChild(labyrinth);
 // BUTTONS!!!
-var buttons = ["up", "bottom", "left", "right"];
+var buttons = ["up", "down", "left", "right"];
 
 function addButtons(array) {
     var buttonContainer = document.createElement("div");
@@ -59,23 +63,50 @@ function addButtons(array) {
         buttonContainer.className = "buttonContainer";
         buttonContainer.appendChild(button);
     }
-    document.body.appendChild(buttonContainer);
+    labyrinth.appendChild(buttonContainer);
 }
 addButtons(buttons);
 
 var upBtn = document.querySelector('.up');
-var downBtn = document.querySelector('.bottom');
+var downBtn = document.querySelector('.down');
 var leftBtn = document.querySelector('.left');
 var rightBtn = document.querySelector('.right');
-/*
-* [1,1,1,1,1,1,1,1],
-* [1,0,0,0,0,0,0,1],
-* [1,0,0,s,0,0,0,1], -> pos[2][3] : up    -> pos[1][3]
-* [1,0,0,0,0,0,0,1], -> pos[2][3] : down  -> pos[3][3]
-* [1,0,0,0,0,0,0,1], -> pos[2][3] : left  -> pos[2][2]
-* [1,0,0,0,0,0,0,1], -> pos[2][3] : right -> pos[2][4]
-* [1,1,1,1,1,1,1,1]
-* */
+
+function isGold() {
+    if(gold["row"] === start["row"] && gold["column"] === start["column"]) {
+        alert("I GOT A POWER!!!");
+        document.body.removeChild(labyrinth);
+        labyrinth = document.createElement('div');
+        initBoard();
+        gold = addClass('gold');
+        start = addClass('start');
+        document.body.appendChild(labyrinth);
+        addButtons(buttons);
+        upBtn = document.querySelector('.up');
+        downBtn = document.querySelector('.bottom');
+        leftBtn = document.querySelector('.left');
+        rightBtn = document.querySelector('.right');
+        upBtn.addEventListener("click", function () {
+            console.log("You click up!");
+            move("up");
+        });
+        downBtn.addEventListener("click", function () {
+            console.log("You click down!");
+            move("down");
+        });
+        rightBtn.addEventListener("click", function () {
+            console.log("You click right!");
+            move("right");
+        });
+        leftBtn.addEventListener("click", function () {
+            console.log("You click left!");
+            move("left");
+        });
+    }
+    else {
+        console.log("keep tracking...");
+    }
+}
 
 function move(direction) {
     var row = start["row"];
@@ -101,6 +132,7 @@ function move(direction) {
                 ") span:nth-child("
                 + column +
                 ")").style.backgroundColor = "red";
+            isGold();
         }
     }
     else if(direction === "down") {
@@ -122,6 +154,7 @@ function move(direction) {
                 ") span:nth-child("
                 + column +
                 ")").style.backgroundColor = "red";
+            isGold();
         }
     }
     else if(direction === "left") {
@@ -143,6 +176,7 @@ function move(direction) {
                 ") span:nth-child("
                 + column +
                 ")").style.backgroundColor = "red";
+            isGold();
         }
     }
     else if(direction === "right") {
@@ -164,8 +198,10 @@ function move(direction) {
                 ") span:nth-child("
                 + column +
                 ")").style.backgroundColor = "red";
+            isGold();
         }
     }
+
 }
 
 upBtn.addEventListener("click", function () {
@@ -184,6 +220,12 @@ leftBtn.addEventListener("click", function () {
     console.log("You click left!");
     move("left");
 });
+
+
+
+
+
+
 
 
 
