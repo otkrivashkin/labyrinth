@@ -108,9 +108,9 @@ function isGold() {
     }
 }
 
-function move(direction) {
-    var row = start["row"];
-    var column = start["column"];
+function move(direction, elementName) {
+    var row = elementName["row"];
+    var column = elementName["column"];
     var tempRow = row;
     var tempColumn = column;
     if (direction === "up") {
@@ -203,28 +203,51 @@ function move(direction) {
     }
 
 }
+// Minos
+var minos = addClass('minos');
+function findPlayer() {
+    while (minos["row"] === start["row"] && minos["column"] === start["column"]) {
+        for (var row = 1; row < labyrinth.childElementCount; row++) {
+            for (var column = 0; column < labyrinth.querySelector("p:nth-child("+ row + ")").childElementCount; column++) {
+                if (start["row"] > minos["row"] && start["column"] !== minos["column"]) { // if player above minos
+                    move("up", minos);
+                }
+                else if (start["row"] < minos["row"] && start["column"] !== minos["column"]) { // if player below minos
+                    move("down", minos);
+                }
+                else if (start["column"] < minos["column"] && start["row"] !== minos["row"]) { // if player by left side from minos
+                    move("left", minos);
+                }
+                else if (start["column"] > minos["column"] && start["row"] !== minos["row"]) { // if player by right side from minos
+                    move("right", minos);
+                }
+            }
+        }
+        console.log("Minos catch you!");
+    }
+    return true;
+}
 
 upBtn.addEventListener("click", function () {
     console.log("You click up!");
-    move("up");
+    move("up", start);
+    findPlayer();
 });
 downBtn.addEventListener("click", function () {
     console.log("You click down!");
-    move("down");
+    move("down", start);
+    findPlayer();
 });
 rightBtn.addEventListener("click", function () {
     console.log("You click right!");
-    move("right");
+    move("right", start);
+    findPlayer();
 });
 leftBtn.addEventListener("click", function () {
     console.log("You click left!");
-    move("left");
+    move("left", start);
+    findPlayer();
 });
-
-
-
-
-
 
 
 
