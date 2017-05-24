@@ -19,14 +19,53 @@ span.wall {
   background: #999; }
 
 span.gold {
-  background: #fa0; }
+  background: #fa0;
+  position: relative; }
+  span.gold:after {
+    content: "G";
+    display: block;
+    position: absolute;
+    font-size: 10px;
+    line-height: 10px;
+    left: 5px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+    overflow: hidden; }
 
 span.road {
   background: none; }
 
 span.start {
-  background: red; }
+  background: red;
+  position: relative; }
+  span.start:after {
+    content: "P";
+    display: block;
+    position: absolute;
+    font-size: 10px;
+    line-height: 10px;
+    left: 5px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+    overflow: hidden; }
 
 span.minos {
-  background: yellowgreen;
-}
+  background-color: greenyellow;
+  position: relative;
+  z-index: -1; }
+  span.minos:after {
+    content: "M";
+    display: block;
+    position: absolute;
+    font-size: 10px;
+    line-height: 10px;
+    left: 5px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+    overflow: hidden; }

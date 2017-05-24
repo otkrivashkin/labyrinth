@@ -107,8 +107,7 @@ function isGold() {
         console.log("keep tracking...");
     }
 }
-// TODO replace start with elementName
-function move(direction, elementName) {
+function move(direction, elementName, bgColor) {
     var row = elementName["row"];
     var column = elementName["column"];
     var tempRow = row;
@@ -120,7 +119,7 @@ function move(direction, elementName) {
                 + column +
                 ")").className === "wall";
         if (!isWallUp) {
-            row = --start["row"];
+            row = --elementName["row"];
             labyrinth.querySelector("p:nth-child("
                 + (row+1) +
                 ") span:nth-child("
@@ -131,7 +130,7 @@ function move(direction, elementName) {
                 + row +
                 ") span:nth-child("
                 + column +
-                ")").style.backgroundColor = "red";
+                ")").style.backgroundColor = bgColor;
             isGold();
         }
     }
@@ -142,7 +141,7 @@ function move(direction, elementName) {
                 + column +
                 ")").className === "wall";
         if (!isWallDown) {
-            row = ++start["row"];
+            row = ++elementName["row"];
             labyrinth.querySelector("p:nth-child("
                 + (row-1) +
                 ") span:nth-child("
@@ -153,7 +152,7 @@ function move(direction, elementName) {
                 + row +
                 ") span:nth-child("
                 + column +
-                ")").style.backgroundColor = "red";
+                ")").style.backgroundColor = bgColor;
             isGold();
         }
     }
@@ -164,7 +163,7 @@ function move(direction, elementName) {
                 + --tempColumn +
                 ")").className === "wall";
         if (!isWallLeft) {
-            column = --start["column"];
+            column = --elementName["column"];
             labyrinth.querySelector("p:nth-child("
                 + row +
                 ") span:nth-child("
@@ -175,7 +174,7 @@ function move(direction, elementName) {
                 + row +
                 ") span:nth-child("
                 + column +
-                ")").style.backgroundColor = "red";
+                ")").style.backgroundColor = bgColor;
             isGold();
         }
     }
@@ -186,7 +185,7 @@ function move(direction, elementName) {
                 + ++tempColumn +
                 ")").className === "wall";
         if (!isWallRight) {
-            column = ++start["column"];
+            column = ++elementName["column"];
             labyrinth.querySelector("p:nth-child("
                 + row +
                 ") span:nth-child("
@@ -197,7 +196,7 @@ function move(direction, elementName) {
                 + row +
                 ") span:nth-child("
                 + column +
-                ")").style.backgroundColor = "red";
+                ")").style.backgroundColor = bgColor;
             isGold();
         }
     }
@@ -205,50 +204,51 @@ function move(direction, elementName) {
 }
 // Minos
 var minos = addClass('minos');
-// TODO убрать итерации в findPlayer и использовать только querySelector
-// for example if start[row] > minos[row] { minos[row]++ };
-function findPlayer() {
-    for (var row = 1; row < labyrinth.childElementCount; row++) {
-            if (start["row"] > minos["row"] ) { // игрок снизу
-                if (start["column"] < minos["column"]) { // игрок слева
-                    return move("left", minos); //
-                }
-                else if (start["column"] > minos["column"]) {
-                    return move("right", minos);
-                }
-                return move("down", minos);
-            }
-            else if (start["row"] < minos["row"]) { // if player below minos
-                move("down", minos);
-            }
-            else if (start["column"] < minos["column"] && start["row"] !== minos["row"]) { // if player by left side from minos
-                move("left", minos);
-            }
-            else if (start["column"] > minos["column"] && start["row"] !== minos["row"]) { // if player by right side from minos
-                move("right", minos);
-            }
-        }
 
+function findPlayer() {
+    if (start["row"] === minos["row"] && start["column"] === minos["column"]) {
+        console.log("YOU SHALL NO PASS!!! I FOUND YOU!!!");
+    }
+    else {
+        if (start["row"] > minos["row"] ) { // игрок снизу
+            if (start["column"] < minos["column"]) { // игрок слева
+                return move("left", minos, "yellow"); //
+            }
+            else if (start["column"] > minos["column"]) {
+                return move("right", minos, "yellow");
+            }
+            return move("down", minos, "yellow");
+        }
+        else if (start["row"] < minos["row"]) { // if player below minos
+            return move("down", minos, "yellow");
+        }
+        else if (start["column"] < minos["column"] && start["row"] !== minos["row"]) { // if player by left side from minos
+            return move("left", minos, "yellow");
+        }
+        else if (start["column"] > minos["column"] && start["row"] !== minos["row"]) { // if player by right side from minos
+            return move("right", minos, "yellow");
+        }
+    }
 }
 
 upBtn.addEventListener("click", function () {
     console.log("You click up!");
-    move("up", start);
+    move("up", start, "red");
     findPlayer();
 });
 downBtn.addEventListener("click", function () {
     console.log("You click down!");
-    move("down", start);
+    move("down", start, "red");
     findPlayer();
 });
 rightBtn.addEventListener("click", function () {
     console.log("You click right!");
-    move("right", start);
+    move("right", start, "red");
     findPlayer();
 });
 leftBtn.addEventListener("click", function () {
     console.log("You click left!");
-    move("left", start);
+    move("left", start, "red");
     findPlayer();
 });
 
