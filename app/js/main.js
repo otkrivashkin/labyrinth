@@ -45,7 +45,7 @@ function addClass(className) {
 }
 // add class names in div labyrinth
 var gold = addClass('gold');
-var start = addClass('start');
+var player = addClass('player');
 // add labyrinth in body
 document.body.appendChild(labyrinth);
 // BUTTONS!!!
@@ -73,13 +73,13 @@ var leftBtn = document.querySelector('.left');
 var rightBtn = document.querySelector('.right');
 
 function isGold() {
-    if(gold["row"] === start["row"] && gold["column"] === start["column"]) {
+    if(gold["row"] === player["row"] && gold["column"] === player["column"]) {
         alert("I GOT A POWER!!!");
         document.body.removeChild(labyrinth);
         labyrinth = document.createElement('div');
         initBoard();
         gold = addClass('gold');
-        start = addClass('start');
+        player = addClass('player');
         document.body.appendChild(labyrinth);
         addButtons(buttons);
         upBtn = document.querySelector('.up');
@@ -130,7 +130,7 @@ function move(direction, elementName, bgColor) {
                 + row +
                 ") span:nth-child("
                 + column +
-                ")").style.backgroundColor = bgColor;
+                ")").style.background = bgColor;
             isGold();
         }
     }
@@ -206,53 +206,69 @@ function move(direction, elementName, bgColor) {
 var minos = addClass('minos');
 
 function findPlayer() {
-    if (start["row"] === minos["row"] && start["column"] === minos["column"]) {
+    if (player["row"] === minos["row"] && player["column"] === minos["column"]) {
         console.log("YOU SHALL NO PASS!!! I FOUND YOU!!!");
     }
     else {
-        if (start["row"] > minos["row"] ) { // игрок снизу
-            if (start["column"] < minos["column"]) { // игрок слева
-                return move("left", minos, "yellow"); //
+        if (player["row"] > minos["row"] ) { // игрок снизу
+            if (player["column"] < minos["column"]) { // игрок слева
+                return move("left", minos, "red"); //
             }
-            else if (start["column"] > minos["column"]) {
-                return move("right", minos, "yellow");
+            else if (player["column"] > minos["column"]) {
+                return move("right", minos, "red");
             }
-            return move("down", minos, "yellow");
+            return move("down", minos, "red");
         }
-        else if (start["row"] < minos["row"]) { // if player below minos
-            return move("down", minos, "yellow");
+        else if (player["row"] < minos["row"]) { // if player below minos
+            if (player["column"] < minos["column"]) { // игрок слева
+                return move("left", minos, "red"); //
+            }
+            else if (player["column"] > minos["column"]) {
+                return move("right", minos, "red");
+            }
+            return move("up", minos, "red");
         }
-        else if (start["column"] < minos["column"] && start["row"] !== minos["row"]) { // if player by left side from minos
-            return move("left", minos, "yellow");
+        else if (player["column"] < minos["column"] && player["row"] !== minos["row"]) { // if player by left side from minos
+            if (player["row"] < minos["row"]) { // игрок слева
+                return move("up", minos, "red"); //
+            }
+            else if (player["row"] > minos["row"]) {
+                return move("down", minos, "red");
+            }
+            return move("left", minos, "red");
         }
-        else if (start["column"] > minos["column"] && start["row"] !== minos["row"]) { // if player by right side from minos
-            return move("right", minos, "yellow");
+        else if (player["column"] > minos["column"] && player["row"] !== minos["row"]) { // if player by right side from minos
+            if (player["row"] < minos["row"]) { // игрок слева
+                return move("up", minos, "red"); //
+            }
+            else if (player["row"] > minos["row"]) {
+                return move("down", minos, "red");
+            }
+            return move("right", minos, "red");
         }
     }
 }
 
 upBtn.addEventListener("click", function () {
     console.log("You click up!");
-    move("up", start, "red");
+    move("up", player, "green");
     findPlayer();
 });
 downBtn.addEventListener("click", function () {
     console.log("You click down!");
-    move("down", start, "red");
+    move("down", player, "green");
     findPlayer();
 });
 rightBtn.addEventListener("click", function () {
     console.log("You click right!");
-    move("right", start, "red");
+    move("right", player, "green");
     findPlayer();
 });
 leftBtn.addEventListener("click", function () {
     console.log("You click left!");
-    move("left", start, "red");
+    move("left", player, "green");
     findPlayer();
 });
-
-
 
 
 
